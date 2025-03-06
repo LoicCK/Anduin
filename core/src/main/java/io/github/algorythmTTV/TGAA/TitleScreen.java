@@ -1,5 +1,6 @@
 package io.github.algorythmTTV.TGAA;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -7,9 +8,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.Gdx;
 
 
@@ -35,6 +33,7 @@ public class TitleScreen implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(Color.BLACK);
+        game.camera.update();
         game.viewport.apply();
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
         game.batch.begin();
@@ -47,6 +46,10 @@ public class TitleScreen implements Screen {
         game.font.draw(game.batch, "TGAA - The Great Adventures of Anduin", 10, 5);
 
         game.batch.end();
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            game.setScreen(new GameScreen(game));
+        }
     }
 
     @Override

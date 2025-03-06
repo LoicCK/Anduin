@@ -1,0 +1,33 @@
+package io.github.algorythmTTV.TGAA.entities;
+
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import io.github.algorythmTTV.TGAA.TGAA;
+import io.github.algorythmTTV.TGAA.engine.ItemList;
+
+public class IntelligentCharacter {
+    private String name;
+    private String description;
+    private ItemList inventory;
+    private Texture texture;
+    private Sprite sprite;
+
+    public IntelligentCharacter(String name, String description, AssetManager manager, float width, float height, float x, float y) {
+        this.name = name;
+        this.description = description;
+        inventory = new ItemList();
+        texture = manager.get("characters/" + name + ".png", Texture.class);
+        sprite = new Sprite(texture);
+        sprite.setSize(width, height);
+        sprite.setPosition(x, y);
+    }
+
+    public Sprite getSprite() {
+        return sprite;
+    }
+
+    public void render(TGAA game) {
+        sprite.draw(game.batch);
+    }
+}
