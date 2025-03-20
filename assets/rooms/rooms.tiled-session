@@ -1,12 +1,72 @@
 {
-    "activeFile": "",
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "room2.tmx",
     "expandedProjectPaths": [
+        "."
     ],
     "fileStates": {
+        "TX Plant 1920.tsx": {
+            "scaleInDock": 1
+        },
+        "TX Props 1920.tsx": {
+            "scaleInDock": 0.25
+        },
+        "TX Shadow 1920.tsx": {
+            "scaleInDock": 1
+        },
+        "TX Shadow Plant 1920.tsx": {
+            "scaleInDock": 1
+        },
+        "TX Struct 1920.tsx": {
+            "scaleInDock": 0.75
+        },
+        "TX Tileset Grass 960.tsx": {
+            "scaleInDock": 1
+        },
+        "TX Tileset Wall 1920.tsx": {
+            "scaleInDock": 0.5
+        },
+        "room2.tmx": {
+            "expandedObjectLayers": [
+                2,
+                3
+            ],
+            "scale": 0.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 897,
+                "y": 39
+            }
+        },
+        "test.tmx": {
+            "expandedObjectLayers": [
+                10,
+                9,
+                13
+            ],
+            "scale": 0.75,
+            "selectedLayer": 10,
+            "viewCenter": {
+                "x": 456.66666666666663,
+                "y": 1195.3333333333333
+            }
+        }
     },
+    "map.height": 9,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 120,
+    "map.tileWidth": 120,
+    "map.width": 16,
     "openFiles": [
+        "test.tmx",
+        "room2.tmx"
     ],
     "project": "rooms.tiled-project",
     "recentFiles": [
+        "test.tmx",
+        "room2.tmx"
     ]
 }

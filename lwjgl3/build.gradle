@@ -38,7 +38,6 @@ dependencies {
   if(enableGraalNative == 'true') {
     implementation "io.github.berstanio:gdx-svmhelper-backend-lwjgl3:$graalHelperVersion"
     }
-
 }
 
 def os = System.properties['os.name'].toLowerCase()

@@ -4,14 +4,15 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import io.github.algorythmTTV.TGAA.TGAA;
+import io.github.algorythmTTV.TGAA.engine.Item;
 import io.github.algorythmTTV.TGAA.engine.ItemList;
 
 public class IntelligentCharacter {
-    private String name;
-    private String description;
-    private ItemList inventory;
-    private Texture texture;
-    private Sprite sprite;
+    protected String name;
+    protected String description;
+    protected ItemList inventory;
+    protected Texture texture;
+    protected Sprite sprite;
 
     public IntelligentCharacter(String name, String description, AssetManager manager, float width, float height, float x, float y) {
         this.name = name;
@@ -29,5 +30,14 @@ public class IntelligentCharacter {
 
     public void render(TGAA game) {
         sprite.draw(game.batch);
+    }
+
+    public boolean addItem (Item item) {
+        inventory.addItem(item);
+        return true;
+    }
+
+    public Item takeItem(String name) {
+        return inventory.takeItem(name);
     }
 }
