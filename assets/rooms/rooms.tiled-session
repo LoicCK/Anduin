@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "room2.tmx",
+    "activeFile": "test.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -44,14 +44,14 @@
         "test.tmx": {
             "expandedObjectLayers": [
                 10,
-                9,
-                13
+                13,
+                9
             ],
             "scale": 0.75,
             "selectedLayer": 10,
             "viewCenter": {
-                "x": 456.66666666666663,
-                "y": 1195.3333333333333
+                "x": 456,
+                "y": 1196
             }
         }
     },
@@ -61,8 +61,7 @@
     "map.tileWidth": 120,
     "map.width": 16,
     "openFiles": [
-        "test.tmx",
-        "room2.tmx"
+        "test.tmx"
     ],
     "project": "rooms.tiled-project",
     "recentFiles": [

@@ -7,12 +7,18 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.files.FileHandle;
 import io.github.algorythmTTV.TGAA.engine.Item;
 import io.github.algorythmTTV.TGAA.engine.Room;
 import io.github.algorythmTTV.TGAA.entities.AnimatedEntity;
 import io.github.algorythmTTV.TGAA.entities.Player;
+
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 public class GameScreen implements Screen {
     final TGAA game;
@@ -22,6 +28,9 @@ public class GameScreen implements Screen {
     private AnimatedEntity playerIdleAnimation;
     HashMap<String, Room> rooms;
     ArrayList<Room> loadedRooms;
+    private List<Music> musicList;
+    private Music currentMusic;
+    private int musicIndex = 0;
 
     public GameScreen(TGAA game) {
         this.game = game;
@@ -42,8 +51,23 @@ public class GameScreen implements Screen {
         rooms.get("room2").addNeighbour(rooms.get("test"));
 
         player = new Player(manager);
+
+        musicList = new ArrayList<>();
+        loadMusic();
+        Collections.shuffle(musicList);
+        currentMusic = musicList.get(0);
+        currentMusic.play();
         //playerIdleAnimation = new AnimatedEntity("characters/animations/player/idle.png", 124, 124, 1, 12, 0.1f, 10, 10);
     }
+
+    private void loadMusic() {
+        FileHandle dirHandle = Gdx.files.internal("assets/sound/music/");
+        FileHandle[] files = dirHandle.list();
+        for (FileHandle file : files) {
+            musicList.add(Gdx.audio.newMusic(file));
+        }
+    }
+
 
     public void changeRoom(String roomName) {
         currentRoom = rooms.get(roomName);
@@ -72,6 +96,8 @@ public class GameScreen implements Screen {
     @Override
     public void render(float v) {
         input(v);
+
+        music();
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.viewport.apply();
@@ -168,6 +194,16 @@ public class GameScreen implements Screen {
         for (String item: inv.keySet()) {
             game.font12.draw(game.batch, item + " x" + inv.get(item).size(), 10, 450-50*i);
             i++;
+        }
+    }
+
+    private void music() {
+        if (!currentMusic.isPlaying()) {
+            if (musicIndex >= musicList.size()) {
+                musicIndex = 0;
+            }
+            currentMusic = musicList.get(musicIndex);
+            currentMusic.play();
         }
     }
 
