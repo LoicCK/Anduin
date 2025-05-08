@@ -3,16 +3,26 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "test.tmx",
+    "activeFile": "room2.tmx",
     "expandedProjectPaths": [
         "."
     ],
     "fileStates": {
+        "TX FX Candle Flame_480.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "TX FX Water Foam_960.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "TX Plant 1920.tsx": {
-            "scaleInDock": 1
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "TX Props 1920.tsx": {
-            "scaleInDock": 0.25
+            "scaleInDock": 0.25,
+            "scaleInEditor": 1
         },
         "TX Shadow 1920.tsx": {
             "scaleInDock": 1
@@ -23,49 +33,138 @@
         "TX Struct 1920.tsx": {
             "scaleInDock": 0.75
         },
+        "TX Tileset Dirt_960.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "TX Tileset Grass 960.tsx": {
-            "scaleInDock": 1
+            "scaleInDock": 0.5
+        },
+        "TX Tileset Grass_1920.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "TX Tileset Terrain_3840.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "TX Tileset Wall 1920.tsx": {
             "scaleInDock": 0.5
         },
+        "TX Village Building Shadow_7680.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "TX Village Building_7680.tsx": {
+            "scaleInDock": 0.33,
+            "scaleInEditor": 1
+        },
+        "TX Village Plant Shadow_3840.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "TX Village Plant_3840.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "TX Village Props Shadow_7680.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "TX Village Props_7680.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 2
+        },
+        "TX Village Props_agrandie_3.75x.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 3
+        },
         "room2.tmx": {
+            "expandedObjectLayers": [
+                3,
+                2
+            ],
+            "scale": 0.5,
+            "selectedLayer": 6,
+            "viewCenter": {
+                "x": 394,
+                "y": -254
+            }
+        },
+        "sanctuaryEntrance.tmx": {
             "expandedObjectLayers": [
                 2,
                 3
             ],
-            "scale": 0.5,
-            "selectedLayer": 1,
+            "scale": 0.75,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 897,
-                "y": 39
+                "x": 605.3333333333333,
+                "y": 401.33333333333337
+            }
+        },
+        "sanctuaryMain.tmx": {
+            "expandedObjectLayers": [
+                10
+            ],
+            "scale": 0.5,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 1230,
+                "y": 360
             }
         },
         "test.tmx": {
             "expandedObjectLayers": [
-                10,
                 13,
-                9
+                9,
+                10
             ],
             "scale": 0.75,
-            "selectedLayer": 10,
+            "selectedLayer": 9,
             "viewCenter": {
-                "x": 456,
-                "y": 1196
+                "x": 614.6666666666667,
+                "y": 878.6666666666666
             }
         }
     },
+    "last.imagePath": "C:/Users/loicc/Documents/Jeu vidéo/java/TGAA/TGAA/assets/rooms",
     "map.height": 9,
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 120,
     "map.tileWidth": 120,
     "map.width": 16,
     "openFiles": [
-        "test.tmx"
+        "test.tmx",
+        "room2.tmx",
+        "TX Village Props_7680.tsx",
+        "TX Village Props Shadow_7680.tsx",
+        "TX Village Plant_3840.tsx",
+        "TX Village Plant Shadow_3840.tsx",
+        "TX Village Building_7680.tsx",
+        "TX Village Building Shadow_7680.tsx",
+        "TX Tileset Terrain_3840.tsx",
+        "TX Tileset Grass_1920.tsx",
+        "TX Tileset Dirt_960.tsx"
     ],
     "project": "rooms.tiled-project",
     "recentFiles": [
         "test.tmx",
-        "room2.tmx"
-    ]
+        "TX Tileset Dirt_960.tsx",
+        "TX Tileset Grass_1920.tsx",
+        "TX Tileset Terrain_3840.tsx",
+        "TX Village Building Shadow_7680.tsx",
+        "TX Village Building_7680.tsx",
+        "TX Village Plant Shadow_3840.tsx",
+        "TX Village Plant_3840.tsx",
+        "TX Village Props Shadow_7680.tsx",
+        "TX Village Props_7680.tsx",
+        "room2.tmx",
+        "TX FX Water Foam_960.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 120,
+        "width": 120
+    }
 }

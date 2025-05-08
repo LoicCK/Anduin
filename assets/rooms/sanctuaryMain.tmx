@@ -150,7 +150,7 @@
  <objectgroup color="#ffff00" id="10" name="Teleports">
   <object id="43" x="122.333" y="1101.67" width="716" height="12.6667">
    <properties>
-    <property name="destination" value="room2"/>
+    <property name="destination" value="sanctuaryEntrance"/>
     <property name="orientation" value="top"/>
    </properties>
   </object>

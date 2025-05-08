@@ -42,13 +42,13 @@ public class GameScreen implements Screen {
         rooms = new HashMap<>();
         loadedRooms = new ArrayList<>();
 
-        currentRoom = new Room("test", manager, new int[] {0,1,2,3,4,5,6}, new int[] {7,8});
+        currentRoom = new Room("sanctuaryMain", manager, new int[] {0,1,2,3,4,5,6}, new int[] {7,8});
         currentRoom.prepRoom();
-        rooms.put("test", currentRoom);
-        rooms.put("room2", new Room("room2", manager, new int[] {0,1}, new int[] {}));
+        rooms.put("sanctuaryMain", currentRoom);
+        rooms.put("sanctuaryEntrance", new Room("sanctuaryEntrance", manager, new int[] {0,1,2,3,4,5,6}, new int[] {7}));
 
-        rooms.get("test").addNeighbour(rooms.get("room2"));
-        rooms.get("room2").addNeighbour(rooms.get("test"));
+        rooms.get("sanctuaryMain").addNeighbour(rooms.get("sanctuaryEntrance"));
+        rooms.get("sanctuaryEntrance").addNeighbour(rooms.get("sanctuaryMain"));
 
         player = new Player(manager);
 
