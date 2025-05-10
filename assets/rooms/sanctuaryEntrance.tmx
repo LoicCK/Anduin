@@ -121,7 +121,7 @@
   <object id="18" x="256.167" y="696.167" width="204.833" height="41.1667"/>
   <object id="19" x="261.167" y="361.333" width="78.1667" height="30.6667"/>
   <object id="20" x="617.333" y="717.333" width="85.3333" height="33.3333"/>
-  <object id="21" x="1012" y="345.333" width="18.6667" height="45.3333"/>
+  <object id="21" x="1003.67" y="356" width="34.3334" height="42"/>
   <object id="22" x="749" y="403" width="68" height="25.5"/>
  </objectgroup>
  <objectgroup color="#ffff00" id="3" name="Teleports">

@@ -103,12 +103,15 @@ public class GameScreen implements Screen {
         game.viewport.apply();
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
 
-        game.batch.begin();
-
         currentRoom.render(game, false);
+
+        game.batch.begin();
         player.render(game);
+        game.batch.end();
 
         currentRoom.render(game, true);
+
+        game.batch.begin();
 
         currentRoom.renderItems(player.getSprite().getX(), player.getSprite().getY(), game);
 
