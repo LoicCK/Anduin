@@ -31,17 +31,18 @@ public class Room {
     int[] top;
     static boolean canTeleport = true;
     ArrayList<Room> neighbours;
+    AssetManager manager;
 
     public Room(String name, AssetManager manager, int[] bottom, int[] top) {
         this.name = name;
         this.bottom = bottom;
         this.top=top;
         neighbours = new ArrayList<Room>();
+        this.manager = manager;
     }
 
     public void prepRoom() {
-        System.out.println("Preparing room " + name);
-        map = new TmxMapLoader().load("rooms/" + name + ".tmx");
+        map = this.manager.get("rooms/" + name + ".tmx", TiledMap.class);
         renderer = new OrthogonalTiledMapRenderer(map, 1/2.4f);
 
         collisionsObjects = map.getLayers().get("Collisions").getObjects();
@@ -104,7 +105,7 @@ public class Room {
         return false;
     }
 
-    public String teleport(float x, float y, float width, float height) {
+    public Object[] teleport(float x, float y, float width, float height) {
         Rectangle objectRect = new Rectangle(x, y, width, height);
         boolean inTpRect = false;
         for (Rectangle teleportRect : teleporterRects.keySet()) {
@@ -112,7 +113,7 @@ public class Room {
                 if (canTeleport) {
                     MapProperties properties = teleporterRects.get(teleportRect);
                     canTeleport = false;
-                    return properties.get("destination") + " " + properties.get("orientation");
+                    return new Object[] {properties.get("destination"), properties.get("x"), properties.get("y")};
                 }
                 else {
                     inTpRect = true;
@@ -145,13 +146,21 @@ public class Room {
         }
     }
 
-    public void dispose() {
-        map.dispose();
-        ((OrthogonalTiledMapRenderer) renderer).dispose();
+    private void unloadGraphics() {
+        if (renderer instanceof OrthogonalTiledMapRenderer) {
+            ((OrthogonalTiledMapRenderer) renderer).dispose();
+        }
+        renderer = null;
         collisionsObjects = null;
         collisionRects = null;
         teleportersObjects = null;
         teleporterRects = null;
+        itemsObjects = null;
+        itemsRects = null;
+    }
+
+    public void dispose() {
+        unloadGraphics();
     }
 }
 

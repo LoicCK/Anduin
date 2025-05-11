@@ -147,7 +147,12 @@
   <object id="25" x="1786.67" y="867.333" width="18" height="213.333"/>
  </objectgroup>
  <objectgroup color="#ffff00" id="10" name="Teleports">
-  <object id="26" x="110" y="327.333" width="41.3333" height="288.667"/>
+  <object id="26" x="110" y="327.333" width="41.3333" height="288.667">
+   <properties>
+    <property name="x" type="int" value="0"/>
+    <property name="y" type="int" value="0"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="11" name="Items"/>
 </map>

@@ -7,40 +7,45 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import io.github.algorythmTTV.TGAA.engine.Item;
+import io.github.algorythmTTV.TGAA.engine.MusicPlayer;
 import io.github.algorythmTTV.TGAA.engine.Room;
-import io.github.algorythmTTV.TGAA.entities.AnimatedEntity;
 import io.github.algorythmTTV.TGAA.entities.Player;
-
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
 public class GameScreen implements Screen {
     final TGAA game;
     private AssetManager manager;
     private Room currentRoom;
     private final Player player;
-    private AnimatedEntity playerIdleAnimation;
     HashMap<String, Room> rooms;
     ArrayList<Room> loadedRooms;
-    private List<Music> musicList;
-    private Music currentMusic;
-    private int musicIndex = 0;
+    private MusicPlayer musicPlayer;
+    private GameState currentState;
 
     public GameScreen(TGAA game) {
         this.game = game;
         manager = new AssetManager();
         manager.load("characters/player.png", Texture.class);
         manager.load("items/HealthPotion.png", Texture.class);
-        manager.finishLoading();
+        manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
 
         rooms = new HashMap<>();
         loadedRooms = new ArrayList<>();
+
+        String[] mapFiles = {
+            "rooms/sanctuaryMain.tmx",
+            "rooms/sanctuaryEntrance.tmx"
+        };
+
+        for (String mapFile : mapFiles) {
+            manager.load(mapFile, TiledMap.class);
+        }
+        manager.finishLoading();
 
         currentRoom = new Room("sanctuaryMain", manager, new int[] {0,1,2,3,4,5,6}, new int[] {7,8});
         currentRoom.prepRoom();
@@ -52,22 +57,10 @@ public class GameScreen implements Screen {
 
         player = new Player(manager);
 
-        musicList = new ArrayList<>();
-        loadMusic();
-        Collections.shuffle(musicList);
-        currentMusic = musicList.get(0);
-        currentMusic.play();
-        //playerIdleAnimation = new AnimatedEntity("characters/animations/player/idle.png", 124, 124, 1, 12, 0.1f, 10, 10);
-    }
+        musicPlayer = new MusicPlayer();
 
-    private void loadMusic() {
-        FileHandle dirHandle = Gdx.files.internal("assets/sound/music/");
-        FileHandle[] files = dirHandle.list();
-        for (FileHandle file : files) {
-            musicList.add(Gdx.audio.newMusic(file));
-        }
+        currentState = GameState.RUNNING;
     }
-
 
     public void changeRoom(String roomName) {
         currentRoom = rooms.get(roomName);
@@ -77,7 +70,7 @@ public class GameScreen implements Screen {
         loadedRooms.remove(currentRoom);
         for (Room room : loadedRooms) {
             if (!currentRoom.getNeighbours().contains(room)) {
-                room.dispose();
+                manager.unload("rooms/" + roomName + ".tmx");
                 loadedRooms.remove(room);
             }
         }
@@ -95,9 +88,11 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float v) {
+        manager.update();
+
         input(v);
 
-        music();
+        musicPlayer.music();
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.viewport.apply();
@@ -117,77 +112,81 @@ public class GameScreen implements Screen {
 
         renderInv();
 
-        game.batch.end();
+        if (currentState == GameState.PAUSED) {
+            float textWidth = game.font12.draw(game.batch, "PAUSED", 0, 0).width;
+            float textX = (game.viewport.getWorldWidth() - textWidth) / 2;
+            float textY = game.viewport.getWorldHeight() / 2;
 
-        // playerIdleAnimation.update(v);
-        // playerIdleAnimation.render(game.batch, 10, 10);
+            game.font12.draw(game.batch, "PAUSED", textX, textY);
+        }
+
+        game.batch.end();
     }
 
     private void input(float delta) {
-        float speed = 100f;
-
-        if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-            speed = 150f;
-        }
-
-        float moveSpeed = delta * speed;
-        float newX, newY;
-        Sprite playerSprite = player.getSprite();
-
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            newX = playerSprite.getX() + moveSpeed;
-            if (!currentRoom.collidesWith(newX, playerSprite.getY(), playerSprite.getWidth(), playerSprite.getHeight())) {
-                playerSprite.translateX(moveSpeed);
-            }
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            newX = playerSprite.getX() - moveSpeed;
-            if (!currentRoom.collidesWith(newX, playerSprite.getY(), playerSprite.getWidth(), playerSprite.getHeight())) {
-                playerSprite.translateX(-moveSpeed);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            if (currentState == GameState.RUNNING) {
+                currentState = GameState.PAUSED;
+            } else if (currentState == GameState.PAUSED) {
+                currentState = GameState.RUNNING;
             }
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            newY = playerSprite.getY() - moveSpeed;
-            if (!currentRoom.collidesWith(playerSprite.getX(), newY, playerSprite.getWidth(), playerSprite.getHeight())) {
-                playerSprite.translateY(-moveSpeed);
-            }
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            newY = playerSprite.getY() + moveSpeed;
-            if (!currentRoom.collidesWith(playerSprite.getX(), newY, playerSprite.getWidth(), playerSprite.getHeight())) {
-                playerSprite.translateY(moveSpeed);
-            }
-        }
+        if (currentState == GameState.RUNNING) {
+            float speed = 100f;
 
-        String tp = currentRoom.teleport(playerSprite.getX(), playerSprite.getY(), playerSprite.getWidth(), playerSprite.getHeight());
-        if (tp != null) {
-            String direction = tp.split(" ")[0];
-            String orientation = tp.split(" ")[1];
-            changeRoom(direction);
-            switch (orientation) {
-                case "top":
-                    player.getSprite().setY(400);
-                    break;
-                case "bottom":
-                    player.getSprite().setY(0);
-                    break;
-                case "left":
-                    player.getSprite().setX(0);
-                    break;
-                case "right":
-                    player.getSprite().setX(750);
-                    break;
+            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                speed = 150f;
             }
-        }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-            Item item = currentRoom.takeItem(playerSprite.getX(), playerSprite.getY(), playerSprite.getWidth(), playerSprite.getHeight());
-            if (item != null) {
-                if (!player.addItem(item)) {
-                    item = null;
+            float moveSpeed = delta * speed;
+            float newX, newY;
+            Sprite playerSprite = player.getSprite();
+
+            if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+                newX = playerSprite.getX() + moveSpeed;
+                if (!currentRoom.collidesWith(newX, playerSprite.getY(), playerSprite.getWidth(), playerSprite.getHeight())) {
+                    playerSprite.translateX(moveSpeed);
                 }
             }
+            else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+                newX = playerSprite.getX() - moveSpeed;
+                if (!currentRoom.collidesWith(newX, playerSprite.getY(), playerSprite.getWidth(), playerSprite.getHeight())) {
+                    playerSprite.translateX(-moveSpeed);
+                }
+            }
+
+            if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+                newY = playerSprite.getY() - moveSpeed;
+                if (!currentRoom.collidesWith(playerSprite.getX(), newY, playerSprite.getWidth(), playerSprite.getHeight())) {
+                    playerSprite.translateY(-moveSpeed);
+                }
+            }
+            else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+                newY = playerSprite.getY() + moveSpeed;
+                if (!currentRoom.collidesWith(playerSprite.getX(), newY, playerSprite.getWidth(), playerSprite.getHeight())) {
+                    playerSprite.translateY(moveSpeed);
+                }
+            }
+
+            Object[] tp = currentRoom.teleport(playerSprite.getX(), playerSprite.getY(), playerSprite.getWidth(), playerSprite.getHeight());
+            if (tp != null) {
+                String destination = (String) tp[0];
+                int x = (int) tp[1];
+                int y = (int) tp[2];
+                changeRoom(destination);
+                playerSprite.setPosition(x, y);
+            }
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+                Item item = currentRoom.takeItem(playerSprite.getX(), playerSprite.getY(), playerSprite.getWidth(), playerSprite.getHeight());
+                if (item != null) {
+                    if (!player.addItem(item)) {
+                        item = null;
+                    }
+                }
+            }
+
         }
     }
 
@@ -197,16 +196,6 @@ public class GameScreen implements Screen {
         for (String item: inv.keySet()) {
             game.font12.draw(game.batch, item + " x" + inv.get(item).size(), 10, 450-50*i);
             i++;
-        }
-    }
-
-    private void music() {
-        if (!currentMusic.isPlaying()) {
-            if (musicIndex >= musicList.size()) {
-                musicIndex = 0;
-            }
-            currentMusic = musicList.get(musicIndex);
-            currentMusic.play();
         }
     }
 
@@ -233,5 +222,9 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         manager.dispose();
+
+        for (Room room : rooms.values()) {
+            room.dispose();
+        }
     }
 }
