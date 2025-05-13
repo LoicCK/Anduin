@@ -20,7 +20,7 @@ public class Player extends IntelligentCharacter {
     public boolean facingRight = true;
 
     public Player(AssetManager manager) {
-        super("player", "The player", manager, 60f, 60f, 200, 200, manager.get("characters/animations/player/run/player_run.atlas"));
+        super("player", "The player", manager, 50f, 50f, 200, 400, manager.get("characters/animations/player/run/player_run.atlas"));
         money = 0;
         weight = 0;
         maxWeight = 300;

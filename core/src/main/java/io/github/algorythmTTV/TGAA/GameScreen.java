@@ -255,6 +255,8 @@ public class GameScreen implements Screen {
     public void dispose() {
         manager.dispose();
 
+        musicPlayer.dispose();
+
         for (Room room : rooms.values()) {
             room.dispose();
         }
