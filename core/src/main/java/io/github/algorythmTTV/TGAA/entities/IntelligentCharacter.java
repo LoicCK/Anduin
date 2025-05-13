@@ -3,6 +3,7 @@ package io.github.algorythmTTV.TGAA.entities;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import io.github.algorythmTTV.TGAA.TGAA;
 import io.github.algorythmTTV.TGAA.engine.Item;
 import io.github.algorythmTTV.TGAA.engine.ItemList;
@@ -13,8 +14,9 @@ public class IntelligentCharacter {
     protected ItemList inventory;
     protected Texture texture;
     protected Sprite sprite;
+    TextureAtlas atlas;
 
-    public IntelligentCharacter(String name, String description, AssetManager manager, float width, float height, float x, float y) {
+    public IntelligentCharacter(String name, String description, AssetManager manager, float width, float height, float x, float y, TextureAtlas atlas) {
         this.name = name;
         this.description = description;
         inventory = new ItemList();
@@ -22,6 +24,7 @@ public class IntelligentCharacter {
         sprite = new Sprite(texture);
         sprite.setSize(width, height);
         sprite.setPosition(x, y);
+        this.atlas = atlas;
     }
 
     public Sprite getSprite() {

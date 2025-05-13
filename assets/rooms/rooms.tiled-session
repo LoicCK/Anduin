@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "TX Village Building_7680.tsx",
+    "activeFile": "sanctuaryMain.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -84,11 +84,11 @@
                 10,
                 9
             ],
-            "scale": 0.5,
+            "scale": 0.33,
             "selectedLayer": 9,
             "viewCenter": {
-                "x": 960,
-                "y": 539
+                "x": 1075.7575757575758,
+                "y": 406.060606060606
             }
         },
         "room2.tmx": {
@@ -105,25 +105,26 @@
         },
         "sanctuaryEntrance.tmx": {
             "expandedObjectLayers": [
-                2,
-                3
+                3,
+                2
             ],
-            "scale": 0.25,
-            "selectedLayer": 9,
+            "scale": 0.33,
+            "selectedLayer": 8,
             "viewCenter": {
-                "x": 500,
-                "y": 152
+                "x": 803.030303030303,
+                "y": 536.3636363636364
             }
         },
         "sanctuaryMain.tmx": {
             "expandedObjectLayers": [
-                10
+                10,
+                9
             ],
-            "scale": 0.33,
-            "selectedLayer": 10,
+            "scale": 0.5,
+            "selectedLayer": 9,
             "viewCenter": {
-                "x": 812.1212121212121,
-                "y": 763.6363636363636
+                "x": 542,
+                "y": -222
             }
         },
         "test.tmx": {
@@ -158,7 +159,8 @@
         "TX Tileset Dirt_960.tsx",
         "sanctuaryEntrance.tmx",
         "cityAbandonedBridge.tmx",
-        "TX FX Water Foam_960.tsx"
+        "TX FX Water Foam_960.tsx",
+        "sanctuaryMain.tmx"
     ],
     "project": "rooms.tiled-project",
     "property.type": "string",
@@ -167,14 +169,14 @@
         "TX Village Props Shadow_7680.tsx",
         "TX Village Plant_3840.tsx",
         "TX Village Plant Shadow_3840.tsx",
-        "TX FX Water Foam_960.tsx",
-        "cityAbandonedBridge.tmx",
-        "sanctuaryEntrance.tmx",
-        "TX Tileset Dirt_960.tsx",
-        "TX Tileset Grass_1920.tsx",
-        "TX Tileset Terrain_3840.tsx",
+        "TX Village Building_7680.tsx",
         "TX Village Building Shadow_7680.tsx",
-        "TX Village Building_7680.tsx"
+        "TX Tileset Terrain_3840.tsx",
+        "TX Tileset Grass_1920.tsx",
+        "TX Tileset Dirt_960.tsx",
+        "sanctuaryEntrance.tmx",
+        "cityAbandonedBridge.tmx",
+        "TX FX Water Foam_960.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

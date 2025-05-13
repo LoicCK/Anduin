@@ -2,7 +2,9 @@ package io.github.algorythmTTV.TGAA;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -12,34 +14,38 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 public class TGAA extends Game {
 
     public SpriteBatch batch;
-    public BitmapFont font;
-    public BitmapFont font12;
     public FitViewport viewport;
     public OrthographicCamera camera;
+    public BitmapFont minecraftFontSmall;
+    public BitmapFont minecraftFontMedium;
+    public BitmapFont minecraftFontLarge;
+    public static final String FONT_CHARACTERS = FreeTypeFontGenerator.DEFAULT_CHARS;
 
 
+    @Override
     public void create() {
         batch = new SpriteBatch();
-        font = new BitmapFont();
+        camera = new OrthographicCamera();
+        viewport = new FitViewport(800, 450, camera); // Dimensions exemples
+        camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Pixel Game.ttf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Minecraft.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
-        parameter.size = 20;
-
-        BitmapFont font12 = generator.generateFont(parameter); // font size 12 pixels
-        generator.dispose(); // don't forget to dispose to avoid memory leaks!
-
-        this.font12 = font12;
-
-        camera = new OrthographicCamera();
-        viewport = new FitViewport(800, 450, camera);
-        camera.position.set(400f, 225f, 0);
-
-        font.setUseIntegerPositions(false);
-        font.getData().setScale(viewport.getWorldHeight() / Gdx.graphics.getHeight());
-
-        this.setScreen(new TitleScreen(this));
+        parameter.characters = FONT_CHARACTERS;
+        parameter.color = Color.WHITE;
+        parameter.kerning = true;
+        parameter.minFilter = Texture.TextureFilter.Nearest;
+        parameter.magFilter = Texture.TextureFilter.Nearest;
+        parameter.hinting = FreeTypeFontGenerator.Hinting.None;
+        parameter.size = 16;
+        minecraftFontSmall = generator.generateFont(parameter);
+        parameter.size = 24;
+        minecraftFontMedium = generator.generateFont(parameter);
+        parameter.size = 32;
+        minecraftFontLarge = generator.generateFont(parameter);
+        generator.dispose();
+        this.setScreen(new TitleScreen(this)); // Ou l'écran de ton choix
     }
 
     public void render() {
@@ -48,6 +54,8 @@ public class TGAA extends Game {
 
     public void dispose() {
         batch.dispose();
-        font.dispose();
+        if (minecraftFontSmall != null) minecraftFontSmall.dispose();
+        if (minecraftFontMedium != null) minecraftFontMedium.dispose();
+        if (minecraftFontLarge != null) minecraftFontLarge.dispose();
     }
 }

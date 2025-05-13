@@ -4,16 +4,23 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.TextureAtlasLoader;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import io.github.algorythmTTV.TGAA.engine.Item;
 import io.github.algorythmTTV.TGAA.engine.MusicPlayer;
 import io.github.algorythmTTV.TGAA.engine.Room;
 import io.github.algorythmTTV.TGAA.entities.Player;
+import io.github.algorythmTTV.TGAA.settings.KeyManager;
+import io.github.algorythmTTV.TGAA.settings.Keys;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,7 +32,9 @@ public class GameScreen implements Screen {
     HashMap<String, Room> rooms;
     ArrayList<Room> loadedRooms;
     private MusicPlayer musicPlayer;
-    private GameState currentState;
+    private FrameBuffer pauseFbo;
+    private Texture lastFrameTexture;
+    private KeyManager keyManager = new KeyManager();
 
     public GameScreen(TGAA game) {
         this.game = game;
@@ -45,6 +54,13 @@ public class GameScreen implements Screen {
         for (String mapFile : mapFiles) {
             manager.load(mapFile, TiledMap.class);
         }
+
+        manager.setLoader(TextureAtlas.class,
+            new TextureAtlasLoader(new InternalFileHandleResolver())
+        );
+
+        manager.load("ui/ui.atlas", TextureAtlas.class);
+        manager.load("characters/animations/player/run/player_run.atlas", TextureAtlas.class);
         manager.finishLoading();
 
         currentRoom = new Room("sanctuaryMain", manager, new int[] {0,1,2,3,4,5,6}, new int[] {7,8});
@@ -59,7 +75,15 @@ public class GameScreen implements Screen {
 
         musicPlayer = new MusicPlayer();
 
-        currentState = GameState.RUNNING;
+        Gdx.input.setCursorCatched(true);
+
+        pauseFbo = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+
+
+    }
+
+    public KeyManager getKeyManager() {
+        return keyManager;
     }
 
     public void changeRoom(String roomName) {
@@ -95,6 +119,10 @@ public class GameScreen implements Screen {
         musicPlayer.music();
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        drawGameScene();
+    }
+
+    private void drawGameScene() {
         game.viewport.apply();
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
 
@@ -112,81 +140,75 @@ public class GameScreen implements Screen {
 
         renderInv();
 
-        if (currentState == GameState.PAUSED) {
-            float textWidth = game.font12.draw(game.batch, "PAUSED", 0, 0).width;
-            float textX = (game.viewport.getWorldWidth() - textWidth) / 2;
-            float textY = game.viewport.getWorldHeight() / 2;
-
-            game.font12.draw(game.batch, "PAUSED", textX, textY);
-        }
-
         game.batch.end();
     }
 
     private void input(float delta) {
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            if (currentState == GameState.RUNNING) {
-                currentState = GameState.PAUSED;
-            } else if (currentState == GameState.PAUSED) {
-                currentState = GameState.RUNNING;
+            Texture capturedTexture = captureFrame();
+            game.setScreen(new PauseScreen(game, this, capturedTexture, manager));
+        }
+
+        float speed = 100f;
+
+        if (Gdx.input.isKeyPressed(keyManager.getKey(Keys.SPRINT))) {
+            speed = 150f;
+        }
+
+        float moveSpeed = delta * speed;
+        float newX, newY;
+        Sprite playerSprite = player.getSprite();
+        boolean isNowMoving = false;
+
+        if (Gdx.input.isKeyPressed(keyManager.getKey(Keys.GORIGHT))) {
+            newX = playerSprite.getX() + moveSpeed;
+            if (!currentRoom.collidesWith(newX, playerSprite.getY()-10, playerSprite.getWidth(), 10)) {
+                playerSprite.translateX(moveSpeed);
+                player.facingRight = true;
+                isNowMoving = true;
+            }
+        } else if (Gdx.input.isKeyPressed(keyManager.getKey(Keys.GOLEFT))) {
+            newX = playerSprite.getX() - moveSpeed;
+            if (!currentRoom.collidesWith(newX, playerSprite.getY()-10, playerSprite.getWidth(), 10)) {
+                playerSprite.translateX(-moveSpeed);
+                player.facingRight = false;
+                isNowMoving = true;
             }
         }
 
-        if (currentState == GameState.RUNNING) {
-            float speed = 100f;
-
-            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                speed = 150f;
+        if (Gdx.input.isKeyPressed(keyManager.getKey(Keys.GODOWN))) {
+            newY = playerSprite.getY() - moveSpeed;
+            if (!currentRoom.collidesWith(playerSprite.getX(), newY-10, playerSprite.getWidth(), 10)) {
+                playerSprite.translateY(-moveSpeed);
+                isNowMoving = true;
             }
+        } else if (Gdx.input.isKeyPressed(keyManager.getKey(Keys.GOUP))) {
+            newY = playerSprite.getY() + moveSpeed;
+            if (!currentRoom.collidesWith(playerSprite.getX(), newY-10, playerSprite.getWidth(), 10)) {
+                playerSprite.translateY(moveSpeed);
+                isNowMoving = true;
+            }
+        }
 
-            float moveSpeed = delta * speed;
-            float newX, newY;
-            Sprite playerSprite = player.getSprite();
+        player.setMoving(isNowMoving);
 
-            if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-                newX = playerSprite.getX() + moveSpeed;
-                if (!currentRoom.collidesWith(newX, playerSprite.getY(), playerSprite.getWidth(), playerSprite.getHeight())) {
-                    playerSprite.translateX(moveSpeed);
+        Object[] tp = currentRoom.teleport(playerSprite.getX(), playerSprite.getY(), playerSprite.getWidth(), playerSprite.getHeight());
+        if (tp != null) {
+            String destination = (String) tp[0];
+            int x = (int) tp[1];
+            int y = (int) tp[2];
+            changeRoom(destination);
+            playerSprite.setPosition(x, y);
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+            Item item = currentRoom.takeItem(playerSprite.getX(), playerSprite.getY(), playerSprite.getWidth(), playerSprite.getHeight());
+            if (item != null) {
+                if (!player.addItem(item)) {
+                    item = null;
                 }
             }
-            else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-                newX = playerSprite.getX() - moveSpeed;
-                if (!currentRoom.collidesWith(newX, playerSprite.getY(), playerSprite.getWidth(), playerSprite.getHeight())) {
-                    playerSprite.translateX(-moveSpeed);
-                }
-            }
-
-            if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-                newY = playerSprite.getY() - moveSpeed;
-                if (!currentRoom.collidesWith(playerSprite.getX(), newY, playerSprite.getWidth(), playerSprite.getHeight())) {
-                    playerSprite.translateY(-moveSpeed);
-                }
-            }
-            else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-                newY = playerSprite.getY() + moveSpeed;
-                if (!currentRoom.collidesWith(playerSprite.getX(), newY, playerSprite.getWidth(), playerSprite.getHeight())) {
-                    playerSprite.translateY(moveSpeed);
-                }
-            }
-
-            Object[] tp = currentRoom.teleport(playerSprite.getX(), playerSprite.getY(), playerSprite.getWidth(), playerSprite.getHeight());
-            if (tp != null) {
-                String destination = (String) tp[0];
-                int x = (int) tp[1];
-                int y = (int) tp[2];
-                changeRoom(destination);
-                playerSprite.setPosition(x, y);
-            }
-
-            if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-                Item item = currentRoom.takeItem(playerSprite.getX(), playerSprite.getY(), playerSprite.getWidth(), playerSprite.getHeight());
-                if (item != null) {
-                    if (!player.addItem(item)) {
-                        item = null;
-                    }
-                }
-            }
-
         }
     }
 
@@ -194,9 +216,19 @@ public class GameScreen implements Screen {
         int i = 1;
         HashMap<String, ArrayList<Item>> inv = player.getInventory().getMap();
         for (String item: inv.keySet()) {
-            game.font12.draw(game.batch, item + " x" + inv.get(item).size(), 10, 450-50*i);
+            game.minecraftFontSmall.draw(game.batch, item + " x" + inv.get(item).size(), 10, 450-50*i);
             i++;
         }
+    }
+
+    private Texture captureFrame() {
+        pauseFbo.begin();
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        drawGameScene();
+        pauseFbo.end();
+        lastFrameTexture = pauseFbo.getColorBufferTexture();
+        return lastFrameTexture;
     }
 
     @Override
@@ -226,5 +258,7 @@ public class GameScreen implements Screen {
         for (Room room : rooms.values()) {
             room.dispose();
         }
+
+        if (pauseFbo != null) pauseFbo.dispose();
     }
 }

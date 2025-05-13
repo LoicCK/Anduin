@@ -36,7 +36,7 @@ public class TitleScreen implements Screen {
 
         game.batch.draw(bgTexture, 0, 0, worldWidth, worldHeight);
 
-        game.font12.draw(game.batch, "TGAA - The Great Adventures of Anduin", 10, 5);
+        game.minecraftFontLarge.draw(game.batch, "TGAA - The Great Adventures of Anduin", 10, 5);
 
         game.batch.end();
 

@@ -141,7 +141,7 @@ public class Room {
         for (Rectangle itemRect : itemsRects.keySet()) {
             float distance = Vector2.dst(x, y, itemRect.x, itemRect.y);
             if (distance < 100) {
-                game.font.draw(game.batch, itemsRects.get(itemRect).get("description").toString(), itemRect.x, itemRect.y);
+                game.minecraftFontSmall.draw(game.batch, itemsRects.get(itemRect).get("description").toString(), itemRect.x, itemRect.y);
             }
         }
     }

@@ -12,7 +12,7 @@ public class MusicPlayer {
     private List<Music> musicList = new ArrayList<>();
     private Music currentMusic;
     private int musicIndex = 0;
-    private float musicVolume = 0.5f;
+    private float musicVolume = 0f;
 
     public MusicPlayer() {
         loadMusic();

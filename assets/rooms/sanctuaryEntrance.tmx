@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="16" height="9" tilewidth="120" tileheight="120" infinite="0" nextlayerid="15" nextobjectid="24">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="16" height="9" tilewidth="120" tileheight="120" infinite="0" nextlayerid="15" nextobjectid="26">
  <tileset firstgid="1" source="TX Tileset Grass 960.tsx"/>
  <tileset firstgid="65" source="TX Tileset Wall 1920.tsx"/>
  <tileset firstgid="321" source="TX Props 1920.tsx"/>
@@ -112,17 +112,18 @@
 </data>
  </layer>
  <objectgroup id="2" name="Collisions">
-  <object id="10" x="841" y="-133" width="18" height="307"/>
+  <object id="10" x="841" y="-133" width="18" height="366"/>
   <object id="11" x="88" y="-125" width="776" height="22"/>
   <object id="12" x="90.6667" y="-125.5" width="31.3333" height="1152.83"/>
   <object id="13" x="122.667" y="996" width="1592.33" height="30"/>
-  <object id="14" x="1677.5" y="175.5" width="35" height="855.5"/>
-  <object id="15" x="841" y="159" width="872" height="34"/>
-  <object id="18" x="256.167" y="681.5" width="204.833" height="55.8334"/>
+  <object id="14" x="1677.5" y="226.5" width="18" height="804.5"/>
+  <object id="15" x="841" y="225" width="872" height="13"/>
+  <object id="18" x="256.167" y="681.5" width="204.833" height="77.1667"/>
   <object id="19" x="261.167" y="361.333" width="78.1667" height="30.6667"/>
-  <object id="20" x="617.333" y="717.333" width="85.3333" height="33.3333"/>
-  <object id="21" x="1003.67" y="356" width="34.3334" height="42"/>
-  <object id="22" x="749" y="403" width="68" height="25.5"/>
+  <object id="20" x="617.333" y="717.333" width="85.3333" height="74"/>
+  <object id="21" x="1003.67" y="359.333" width="34.3334" height="67.3333"/>
+  <object id="24" x="276.667" y="758.667" width="154" height="24"/>
+  <object id="25" x="984" y="838" width="194" height="46"/>
  </objectgroup>
  <objectgroup color="#ffff00" id="3" name="Teleports">
   <object id="1" x="120" y="1" width="720" height="35">
