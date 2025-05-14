@@ -3,184 +3,146 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "sanctuaryMain.tmx",
+    "activeFile": "bigHouse.tmx",
     "expandedProjectPaths": [
         "."
     ],
+    "file.lastUsedOpenFilter": "Tous les Fichiers (*)",
     "fileStates": {
-        "TX FX Candle Flame_480.tsx": {
-            "scaleInDock": 1,
-            "scaleInEditor": 1
-        },
         "TX FX Water Foam_960.tsx": {
-            "scaleInDock": 0.33,
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "TX Plant 1920.tsx": {
             "scaleInDock": 1,
-            "scaleInEditor": 1
+            "scaleInEditor": 0.75
         },
         "TX Props 1920.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "TX Shadow 1920.tsx": {
-            "scaleInDock": 1
-        },
-        "TX Shadow Plant 1920.tsx": {
-            "scaleInDock": 1
-        },
-        "TX Struct 1920.tsx": {
-            "scaleInDock": 0.75
-        },
-        "TX Tileset Dirt_960.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "TX Shadow Plant 1920.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "TX Struct 1920.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "TX Tileset Dirt_960.tsx": {
+            "scaleInDock": 0.5,
+            "scaleInEditor": 1
+        },
         "TX Tileset Grass 960.tsx": {
-            "scaleInDock": 0.5
+            "scaleInDock": 0.33,
+            "scaleInEditor": 2
         },
         "TX Tileset Grass_1920.tsx": {
+            "scaleInDock": 0.5,
+            "scaleInEditor": 1.5
+        },
+        "TX Tileset Stone Ground 960.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "TX Tileset Terrain_3840.tsx": {
-            "scaleInDock": 0.5,
+            "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "TX Tileset Wall 1920.tsx": {
-            "scaleInDock": 0.5
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "TX Village Building Shadow_7680.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 0.25,
             "scaleInEditor": 1
         },
         "TX Village Building_7680.tsx": {
+            "dynamicWrapping": false,
             "scaleInDock": 0.33,
-            "scaleInEditor": 0.125
+            "scaleInEditor": 0.33
         },
         "TX Village Plant Shadow_3840.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 0.75,
             "scaleInEditor": 1
         },
         "TX Village Plant_3840.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 0.25,
             "scaleInEditor": 1
         },
         "TX Village Props Shadow_7680.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 0.33,
             "scaleInEditor": 1
         },
         "TX Village Props_7680.tsx": {
-            "scaleInDock": 1,
-            "scaleInEditor": 2
+            "scaleInDock": 0.33,
+            "scaleInEditor": 0.125
         },
-        "TX Village Props_agrandie_3.75x.tsx": {
-            "scaleInDock": 1,
-            "scaleInEditor": 3
-        },
-        "cityAbandonedBridge.tmx": {
+        "bigHouse.tmx": {
             "expandedObjectLayers": [
-                10,
-                9
+                36,
+                30
             ],
-            "scale": 0.33,
-            "selectedLayer": 9,
+            "scale": 2,
+            "selectedLayer": 26,
             "viewCenter": {
-                "x": 1671.212121212121,
-                "y": 1009.090909090909
+                "x": 1211.25,
+                "y": 883
             }
         },
-        "room2.tmx": {
-            "expandedObjectLayers": [
-                3,
-                2
-            ],
-            "scale": 0.5,
-            "selectedLayer": 6,
-            "viewCenter": {
-                "x": 394,
-                "y": -254
-            }
-        },
-        "sanctuaryEntrance.tmx": {
-            "expandedObjectLayers": [
-                3,
-                2
-            ],
-            "scale": 0.33,
-            "selectedLayer": 8,
-            "viewCenter": {
-                "x": 1625.7575757575755,
-                "y": 1845.4545454545455
-            }
-        },
-        "sanctuaryMain.tmx": {
-            "expandedObjectLayers": [
-                10,
-                9
-            ],
-            "scale": 0.5,
-            "selectedLayer": 9,
-            "viewCenter": {
-                "x": 291,
-                "y": -222
-            }
-        },
-        "test.tmx": {
-            "expandedObjectLayers": [
-                13,
-                9,
-                10
-            ],
-            "scale": 0.75,
-            "selectedLayer": 9,
-            "viewCenter": {
-                "x": 614.6666666666667,
-                "y": 878.6666666666666
-            }
+        "parts.tsx": {
+            "dynamicWrapping": true
         }
     },
-    "last.imagePath": "C:/Users/loicc/Documents/Jeu vidéo/java/TGAA/TGAA/assets/rooms",
-    "map.height": 9,
+    "last.imagePath": "C:/Users/loicc/Documents/code/jeu vidéo/Anduin/assets/rooms",
+    "map.height": 2,
     "map.lastUsedFormat": "tmx",
-    "map.tileHeight": 120,
-    "map.tileWidth": 120,
-    "map.width": 16,
+    "map.tileHeight": 60,
+    "map.tileWidth": 60,
+    "map.width": 2,
     "openFiles": [
-        "TX Village Props_7680.tsx",
-        "TX Village Props Shadow_7680.tsx",
-        "TX Village Plant_3840.tsx",
-        "TX Village Plant Shadow_3840.tsx",
-        "TX Village Building_7680.tsx",
-        "TX Village Building Shadow_7680.tsx",
-        "TX Tileset Terrain_3840.tsx",
-        "TX Tileset Grass_1920.tsx",
-        "TX Tileset Dirt_960.tsx",
-        "sanctuaryEntrance.tmx",
-        "cityAbandonedBridge.tmx",
+        "TX Plant 1920.tsx",
         "TX FX Water Foam_960.tsx",
-        "sanctuaryMain.tmx"
+        "TX Props 1920.tsx",
+        "TX Shadow 1920.tsx",
+        "TX Shadow Plant 1920.tsx",
+        "TX Struct 1920.tsx",
+        "TX Tileset Dirt_960.tsx",
+        "TX Tileset Grass 960.tsx",
+        "TX Tileset Grass_1920.tsx",
+        "TX Village Building Shadow_7680.tsx",
+        "TX Village Building_7680.tsx",
+        "TX Village Plant Shadow_3840.tsx",
+        "TX Village Props Shadow_7680.tsx",
+        "TX Village Props_7680.tsx",
+        "TX Village Plant_3840.tsx",
+        "bigHouse.tmx"
     ],
     "project": "rooms.tiled-project",
-    "property.type": "string",
+    "property.type": "int",
     "recentFiles": [
-        "TX Village Props_7680.tsx",
-        "TX Village Props Shadow_7680.tsx",
-        "TX Village Plant_3840.tsx",
-        "TX Village Plant Shadow_3840.tsx",
-        "TX Village Building_7680.tsx",
-        "TX Village Building Shadow_7680.tsx",
-        "TX Tileset Terrain_3840.tsx",
-        "TX Tileset Grass_1920.tsx",
+        "TX Plant 1920.tsx",
+        "TX FX Water Foam_960.tsx",
+        "TX Props 1920.tsx",
+        "TX Shadow 1920.tsx",
+        "TX Shadow Plant 1920.tsx",
+        "TX Struct 1920.tsx",
         "TX Tileset Dirt_960.tsx",
-        "sanctuaryEntrance.tmx",
-        "cityAbandonedBridge.tmx",
-        "TX FX Water Foam_960.tsx"
+        "TX Tileset Grass 960.tsx",
+        "TX Tileset Grass_1920.tsx",
+        "TX Village Building Shadow_7680.tsx",
+        "TX Village Building_7680.tsx",
+        "TX Village Plant Shadow_3840.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
-        "height": 120,
-        "width": 120
-    }
+        "height": 60,
+        "width": 60
+    },
+    "tileset.type": 1
 }

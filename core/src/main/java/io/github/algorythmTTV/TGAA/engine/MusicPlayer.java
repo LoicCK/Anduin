@@ -12,7 +12,7 @@ public class MusicPlayer {
     private List<Music> musicList = new ArrayList<>();
     private Music currentMusic;
     private int musicIndex = 0; // Sera utilisé pour la lecture séquentielle/aléatoire
-    private float musicVolume = 1f;
+    private float musicVolume = 0f;
 
     public MusicPlayer() {
         loadMusic();
@@ -27,15 +27,16 @@ public class MusicPlayer {
 
     private void loadMusic() {
         String[] knownMusicFiles = {
-            "Boogie.mp3",
-            "Cruising.mp3",
-            "DeeperMeaning.mp3",
-            "Wet Hands.mp3",
-            "apart.mp3",
-            "breezy.mp3",
-            "escape-by-land-of-fire.mp3",
-            "look-inside-by-snoozybeats.mp3",
-            "tulips-by-snoozybeats.mp3"
+//            "Boogie.mp3",
+//            "Cruising.mp3",
+//            "DeeperMeaning.mp3",
+//            "Wet Hands.mp3",
+//            "apart.mp3",
+//            "breezy.mp3",
+//            "escape-by-land-of-fire.mp3",
+//            "look-inside-by-snoozybeats.mp3",
+//            "tulips-by-snoozybeats.mp3",
+            "symphonie des eclairs.mp3"
         };
         String musicFolderPath = "sound/music/";
 

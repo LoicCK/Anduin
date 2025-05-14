@@ -16,13 +16,16 @@ import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import io.github.algorythmTTV.TGAA.engine.Item;
 import io.github.algorythmTTV.TGAA.engine.MusicPlayer;
+import io.github.algorythmTTV.TGAA.engine.Renderable;
 import io.github.algorythmTTV.TGAA.engine.Room;
 import io.github.algorythmTTV.TGAA.entities.Player;
 import io.github.algorythmTTV.TGAA.settings.KeyManager;
 import io.github.algorythmTTV.TGAA.settings.Keys;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.stream.IntStream;
 
 public class GameScreen implements Screen {
     final TGAA game;
@@ -35,6 +38,7 @@ public class GameScreen implements Screen {
     private FrameBuffer pauseFbo;
     private Texture lastFrameTexture;
     private KeyManager keyManager = new KeyManager();
+    private com.badlogic.gdx.utils.Array<Renderable> dynamicObjects;
 
     public GameScreen(TGAA game) {
         this.game = game;
@@ -47,8 +51,7 @@ public class GameScreen implements Screen {
         loadedRooms = new ArrayList<>();
 
         String[] mapFiles = {
-            "rooms/sanctuaryMain.tmx",
-            "rooms/sanctuaryEntrance.tmx"
+            "rooms/bigHouse.tmx"
         };
 
         for (String mapFile : mapFiles) {
@@ -63,13 +66,9 @@ public class GameScreen implements Screen {
         manager.load("characters/animations/player/run/player_run.atlas", TextureAtlas.class);
         manager.finishLoading();
 
-        currentRoom = new Room("sanctuaryMain", manager, new int[] {0,1,2,3,4,5,6}, new int[] {7,8});
+        currentRoom = new Room("bigHouse", manager, IntStream.range(0, 26).toArray(), new int[] {26});
         currentRoom.prepRoom();
-        rooms.put("sanctuaryMain", currentRoom);
-        rooms.put("sanctuaryEntrance", new Room("sanctuaryEntrance", manager, new int[] {0,1,2,3,4,5,6}, new int[] {7}));
-
-        rooms.get("sanctuaryMain").addNeighbour(rooms.get("sanctuaryEntrance"));
-        rooms.get("sanctuaryEntrance").addNeighbour(rooms.get("sanctuaryMain"));
+        rooms.put("bigHouse", currentRoom);
 
         player = new Player(manager);
 
@@ -125,22 +124,28 @@ public class GameScreen implements Screen {
     private void drawGameScene() {
         game.viewport.apply();
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
+        currentRoom.renderBackground(game);
 
-        currentRoom.render(game, false);
+        dynamicObjects = new com.badlogic.gdx.utils.Array<Renderable>();;
+        dynamicObjects.add(player);
+        if (currentRoom.getSortableMapObjects() != null) {
+            dynamicObjects.addAll(currentRoom.getSortableMapObjects());
+        }
+
+        dynamicObjects.sort(Comparator.comparingDouble(Renderable::getYSortValue));
+        dynamicObjects.reverse();
 
         game.batch.begin();
-        player.render(game);
-        game.batch.end();
 
-        currentRoom.render(game, true);
-
-        game.batch.begin();
-
-        currentRoom.renderItems(player.getSprite().getX(), player.getSprite().getY(), game);
-
-        renderInv();
+        for (Renderable renderable : dynamicObjects) {
+            renderable.render(game.batch);
+        }
 
         game.batch.end();
+
+        currentRoom.renderForegroundLayers(game);
+//        currentRoom.renderItems(player.getSprite().getX(), player.getSprite().getY(), game);
+//        renderInv();
     }
 
     private void input(float delta) {
@@ -163,14 +168,14 @@ public class GameScreen implements Screen {
 
         if (Gdx.input.isKeyPressed(keyManager.getKey(Keys.GORIGHT))) {
             newX = playerSprite.getX() + moveSpeed;
-            if (!currentRoom.collidesWith(newX, playerSprite.getY()-10, playerSprite.getWidth(), 10)) {
+            if (!currentRoom.collidesWith(newX, playerSprite.getY()-10, playerSprite.getWidth(), 15)) {
                 playerSprite.translateX(moveSpeed);
                 player.facingRight = true;
                 isNowMoving = true;
             }
         } else if (Gdx.input.isKeyPressed(keyManager.getKey(Keys.GOLEFT))) {
             newX = playerSprite.getX() - moveSpeed;
-            if (!currentRoom.collidesWith(newX, playerSprite.getY()-10, playerSprite.getWidth(), 10)) {
+            if (!currentRoom.collidesWith(newX, playerSprite.getY()-10, playerSprite.getWidth(), 15)) {
                 playerSprite.translateX(-moveSpeed);
                 player.facingRight = false;
                 isNowMoving = true;
@@ -179,13 +184,13 @@ public class GameScreen implements Screen {
 
         if (Gdx.input.isKeyPressed(keyManager.getKey(Keys.GODOWN))) {
             newY = playerSprite.getY() - moveSpeed;
-            if (!currentRoom.collidesWith(playerSprite.getX(), newY-10, playerSprite.getWidth(), 10)) {
+            if (!currentRoom.collidesWith(playerSprite.getX(), newY-10, playerSprite.getWidth(), 15)) {
                 playerSprite.translateY(-moveSpeed);
                 isNowMoving = true;
             }
         } else if (Gdx.input.isKeyPressed(keyManager.getKey(Keys.GOUP))) {
             newY = playerSprite.getY() + moveSpeed;
-            if (!currentRoom.collidesWith(playerSprite.getX(), newY-10, playerSprite.getWidth(), 10)) {
+            if (!currentRoom.collidesWith(playerSprite.getX(), newY-10, playerSprite.getWidth(), 15)) {
                 playerSprite.translateY(moveSpeed);
                 isNowMoving = true;
             }

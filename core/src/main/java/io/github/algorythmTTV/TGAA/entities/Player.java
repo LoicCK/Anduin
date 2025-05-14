@@ -3,12 +3,14 @@ package io.github.algorythmTTV.TGAA.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import io.github.algorythmTTV.TGAA.TGAA;
 import io.github.algorythmTTV.TGAA.engine.Item;
 import io.github.algorythmTTV.TGAA.engine.ItemList;
+import io.github.algorythmTTV.TGAA.engine.Renderable;
 
-public class Player extends IntelligentCharacter {
+public class Player extends IntelligentCharacter implements Renderable {
     private int money;
     private int weight;
     private int maxWeight;
@@ -20,7 +22,7 @@ public class Player extends IntelligentCharacter {
     public boolean facingRight = true;
 
     public Player(AssetManager manager) {
-        super("player", "The player", manager, 50f, 50f, 200, 400, manager.get("characters/animations/player/run/player_run.atlas"));
+        super("player", "The player", manager, 50f, 50f, 400, 50, manager.get("characters/animations/player/run/player_run.atlas"));
         money = 0;
         weight = 0;
         maxWeight = 300;
@@ -32,18 +34,22 @@ public class Player extends IntelligentCharacter {
     }
 
     @Override
-    public void render(TGAA game) {
+    public float getYSortValue() {
+        return sprite.getY();
+    }
+
+
+    @Override
+    public void render(Batch batch) { // Notez le paramètre Batch
         stateTime += Gdx.graphics.getDeltaTime();
-
         TextureRegion currentFrame;
-
         if (isMoving && runningAnimation != null) {
             currentFrame = runningAnimation.getKeyFrame(stateTime, true);
         } else {
             if (atlas != null && atlas.findRegion("frame", 1) != null) {
                 currentFrame = atlas.findRegion("frame", 1);
             } else if (texture != null) {
-                game.batch.draw(texture, sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+                batch.draw(texture, sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
                 return;
             } else {
                 return;
@@ -54,13 +60,11 @@ public class Player extends IntelligentCharacter {
 
         float drawX = sprite.getX();
         float drawWidth = sprite.getWidth();
-
         if (!facingRight) {
             drawX = sprite.getX() + sprite.getWidth();
             drawWidth = -sprite.getWidth();
         }
-
-        game.batch.draw(currentFrame, drawX, sprite.getY(), drawWidth, sprite.getHeight());
+        batch.draw(currentFrame, drawX, sprite.getY(), drawWidth, sprite.getHeight());
     }
 
     public ItemList getInventory() {

@@ -1,18 +1,26 @@
 package io.github.algorythmTTV.TGAA.engine;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import io.github.algorythmTTV.TGAA.GameScreen;
 import io.github.algorythmTTV.TGAA.TGAA;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
+import io.github.algorythmTTV.TGAA.entities.Player;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,18 +40,23 @@ public class Room {
     static boolean canTeleport = true;
     ArrayList<Room> neighbours;
     AssetManager manager;
+    private Array<SortableMapObject> sortableMapObjects;
+    private static final String SORTABLE_OBJECT_LAYER_NAME = "DynamicObjects";
 
     public Room(String name, AssetManager manager, int[] bottom, int[] top) {
         this.name = name;
         this.bottom = bottom;
-        this.top=top;
+        this.top = top;
         neighbours = new ArrayList<Room>();
         this.manager = manager;
+        this.sortableMapObjects = new Array<>();
     }
 
     public void prepRoom() {
         map = this.manager.get("rooms/" + name + ".tmx", TiledMap.class);
         renderer = new OrthogonalTiledMapRenderer(map, 1/2.4f);
+
+        loadSortableObjects();
 
         collisionsObjects = map.getLayers().get("Collisions").getObjects();
         collisionRects = getObjectsRects(collisionsObjects);
@@ -53,6 +66,24 @@ public class Room {
 
         itemsObjects = map.getLayers().get("Items").getObjects();
         itemsRects = getObjectsRects(itemsObjects);
+    }
+
+    private void loadSortableObjects() {
+        sortableMapObjects.clear();
+
+        MapLayer objectLayer = map.getLayers().get(SORTABLE_OBJECT_LAYER_NAME);
+        if (objectLayer != null) {
+            for (MapObject mapObj : objectLayer.getObjects()) {
+                SortableMapObject sortableObj = new SortableMapObject(mapObj);
+                sortableMapObjects.add(sortableObj);
+            }
+        } else {
+            Gdx.app.error("Room", "Couche d'objets triables '" + SORTABLE_OBJECT_LAYER_NAME + "' non trouvée dans la carte '" + this.name + "'.");
+        }
+    }
+
+    public Array<SortableMapObject> getSortableMapObjects() {
+        return sortableMapObjects;
     }
 
     public void addNeighbour(Room room) {
@@ -83,14 +114,26 @@ public class Room {
         return rects;
     }
 
-    public void render (TGAA game, boolean top) {
+    public void renderBackground(TGAA game) {
         renderer.setView(game.camera);
-        if (top) {
-            renderer.render(this.top);
-        }
-        else {
-            renderer.render(this.bottom);
-        }
+        game.batch.begin();
+        renderer.render(this.bottom);
+        game.batch.end();
+    }
+
+    public void renderForegroundLayers(TGAA game) {
+        renderer.setView(game.camera);
+        game.batch.begin();
+        renderer.render(this.top);
+        game.batch.end();
+    }
+
+    public ArrayList<Renderable> getDynamicTileObjects() {
+        ArrayList<Renderable> objects = new ArrayList<>();
+
+
+
+        return objects;
     }
 
     public boolean collidesWith(float x, float y, float width, float height) {
@@ -147,16 +190,17 @@ public class Room {
     }
 
     private void unloadGraphics() {
-        if (renderer instanceof OrthogonalTiledMapRenderer) {
-            ((OrthogonalTiledMapRenderer) renderer).dispose();
+        if (renderer != null) {
+            renderer = null;
         }
-        renderer = null;
+        // ... (nettoyage des autres ressources si Room les possède directement)
         collisionsObjects = null;
         collisionRects = null;
         teleportersObjects = null;
         teleporterRects = null;
         itemsObjects = null;
         itemsRects = null;
+        sortableMapObjects.clear();
     }
 
     public void dispose() {
