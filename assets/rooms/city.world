@@ -1,0 +1,16 @@
+{
+    "maps": [
+        {
+            "fileName": "bigHouse.tmx",
+            "x": 0,
+            "y": 0
+        },
+        {
+            "fileName": "bigHousePath.tmx",
+            "x": 0,
+            "y": 1080
+        }
+    ],
+    "onlyShowAdjacentMaps": false,
+    "type": "world"
+}
