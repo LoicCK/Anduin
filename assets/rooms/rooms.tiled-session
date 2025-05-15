@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "bigHouse.tmx",
+    "activeFile": "plants.tsx",
     "expandedProjectPaths": [
         "."
     ],
@@ -35,6 +35,7 @@
             "scaleInEditor": 1
         },
         "TX Tileset Dirt_960.tsx": {
+            "dynamicWrapping": false,
             "scaleInDock": 0.5,
             "scaleInEditor": 1
         },
@@ -43,6 +44,7 @@
             "scaleInEditor": 2
         },
         "TX Tileset Grass_1920.tsx": {
+            "dynamicWrapping": false,
             "scaleInDock": 0.5,
             "scaleInEditor": 1.5
         },
@@ -59,7 +61,7 @@
             "scaleInEditor": 1
         },
         "TX Village Building Shadow_7680.tsx": {
-            "scaleInDock": 0.25,
+            "scaleInDock": 0.125,
             "scaleInEditor": 1
         },
         "TX Village Building_7680.tsx": {
@@ -68,19 +70,21 @@
             "scaleInEditor": 0.33
         },
         "TX Village Plant Shadow_3840.tsx": {
-            "scaleInDock": 0.75,
+            "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "TX Village Plant_3840.tsx": {
+            "dynamicWrapping": false,
             "scaleInDock": 0.25,
-            "scaleInEditor": 1
+            "scaleInEditor": 0.5
         },
         "TX Village Props Shadow_7680.tsx": {
-            "scaleInDock": 0.33,
+            "scaleInDock": 0.75,
             "scaleInEditor": 1
         },
         "TX Village Props_7680.tsx": {
-            "scaleInDock": 0.33,
+            "dynamicWrapping": false,
+            "scaleInDock": 0.75,
             "scaleInEditor": 0.125
         },
         "bigHouse.tmx": {
@@ -88,32 +92,61 @@
                 36,
                 30
             ],
-            "scale": 2,
-            "selectedLayer": 26,
+            "scale": 0.33,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 1211.25,
-                "y": 883
+                "x": 915.1515151515152,
+                "y": 1056.060606060606
             }
         },
+        "bigHousePath.tmx": {
+            "scale": 0.125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 960,
+                "y": 540
+            }
+        },
+        "buildings.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 0.75
+        },
         "parts.tsx": {
-            "dynamicWrapping": true
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 0.125
+        },
+        "plants.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 0.0625,
+            "scaleInEditor": 0.125
+        },
+        "props.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 0.25,
+            "scaleInEditor": 0.33
+        },
+        "to make images.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 120,
+                "y": 75.33333333333334
+            }
         }
     },
-    "last.imagePath": "C:/Users/loicc/Documents/code/jeu vidéo/Anduin/assets/rooms",
-    "map.height": 2,
+    "last.imagePath": "C:/Users/loicc/Documents/code/jeu vidéo/Anduin/assets/rooms/buildings",
+    "loadedWorlds": [
+        "C:/Users/loicc/Documents/code/jeu vidéo/Anduin/assets/rooms/city.world"
+    ],
+    "map.height": 8,
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 60,
     "map.tileWidth": 60,
-    "map.width": 2,
+    "map.width": 4,
     "openFiles": [
-        "TX Plant 1920.tsx",
-        "TX FX Water Foam_960.tsx",
-        "TX Props 1920.tsx",
-        "TX Shadow 1920.tsx",
-        "TX Shadow Plant 1920.tsx",
-        "TX Struct 1920.tsx",
         "TX Tileset Dirt_960.tsx",
-        "TX Tileset Grass 960.tsx",
         "TX Tileset Grass_1920.tsx",
         "TX Village Building Shadow_7680.tsx",
         "TX Village Building_7680.tsx",
@@ -121,24 +154,29 @@
         "TX Village Props Shadow_7680.tsx",
         "TX Village Props_7680.tsx",
         "TX Village Plant_3840.tsx",
-        "bigHouse.tmx"
+        "bigHouse.tmx",
+        "bigHousePath.tmx",
+        "plants.tsx",
+        "props.tsx",
+        "buildings.tsx"
     ],
     "project": "rooms.tiled-project",
     "property.type": "int",
     "recentFiles": [
-        "TX Plant 1920.tsx",
-        "TX FX Water Foam_960.tsx",
-        "TX Props 1920.tsx",
-        "TX Shadow 1920.tsx",
-        "TX Shadow Plant 1920.tsx",
-        "TX Struct 1920.tsx",
         "TX Tileset Dirt_960.tsx",
-        "TX Tileset Grass 960.tsx",
         "TX Tileset Grass_1920.tsx",
         "TX Village Building Shadow_7680.tsx",
         "TX Village Building_7680.tsx",
-        "TX Village Plant Shadow_3840.tsx"
+        "TX Village Plant Shadow_3840.tsx",
+        "TX Village Props Shadow_7680.tsx",
+        "TX Village Props_7680.tsx",
+        "TX Village Plant_3840.tsx",
+        "bigHouse.tmx",
+        "bigHousePath.tmx",
+        "buildings.tsx",
+        "props.tsx"
     ],
+    "stampsFolder": "C:/Users/loicc/Documents/code/jeu vidéo/Anduin/assets/rooms",
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
         "height": 60,

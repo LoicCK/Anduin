@@ -66,7 +66,7 @@ public class GameScreen implements Screen {
         manager.load("characters/animations/player/run/player_run.atlas", TextureAtlas.class);
         manager.finishLoading();
 
-        currentRoom = new Room("bigHouse", manager, IntStream.range(0, 26).toArray(), new int[] {26});
+        currentRoom = new Room("bigHouse", manager, IntStream.range(0,4).toArray(), new int[] {5});
         currentRoom.prepRoom();
         rooms.put("bigHouse", currentRoom);
 
@@ -168,14 +168,14 @@ public class GameScreen implements Screen {
 
         if (Gdx.input.isKeyPressed(keyManager.getKey(Keys.GORIGHT))) {
             newX = playerSprite.getX() + moveSpeed;
-            if (!currentRoom.collidesWith(newX, playerSprite.getY()-10, playerSprite.getWidth(), 15)) {
+            if (!currentRoom.collidesWith(newX+5, playerSprite.getY()-10, playerSprite.getWidth()-5, 15)) {
                 playerSprite.translateX(moveSpeed);
                 player.facingRight = true;
                 isNowMoving = true;
             }
         } else if (Gdx.input.isKeyPressed(keyManager.getKey(Keys.GOLEFT))) {
             newX = playerSprite.getX() - moveSpeed;
-            if (!currentRoom.collidesWith(newX, playerSprite.getY()-10, playerSprite.getWidth(), 15)) {
+            if (!currentRoom.collidesWith(newX+5, playerSprite.getY()-10, playerSprite.getWidth()-5, 15)) {
                 playerSprite.translateX(-moveSpeed);
                 player.facingRight = false;
                 isNowMoving = true;
@@ -184,13 +184,13 @@ public class GameScreen implements Screen {
 
         if (Gdx.input.isKeyPressed(keyManager.getKey(Keys.GODOWN))) {
             newY = playerSprite.getY() - moveSpeed;
-            if (!currentRoom.collidesWith(playerSprite.getX(), newY-10, playerSprite.getWidth(), 15)) {
+            if (!currentRoom.collidesWith(playerSprite.getX()+5, newY-10, playerSprite.getWidth()-5, 15)) {
                 playerSprite.translateY(-moveSpeed);
                 isNowMoving = true;
             }
         } else if (Gdx.input.isKeyPressed(keyManager.getKey(Keys.GOUP))) {
             newY = playerSprite.getY() + moveSpeed;
-            if (!currentRoom.collidesWith(playerSprite.getX(), newY-10, playerSprite.getWidth(), 15)) {
+            if (!currentRoom.collidesWith(playerSprite.getX()+5, newY-10, playerSprite.getWidth()-5, 15)) {
                 playerSprite.translateY(moveSpeed);
                 isNowMoving = true;
             }
