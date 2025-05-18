@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.11.2" name="props" tilewidth="360" tileheight="360" tilecount="26" columns="0">
+<tileset version="1.10" tiledversion="1.11.2" name="props" tilewidth="360" tileheight="360" tilecount="25" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image source="props/bench_simple_small2.png" width="120" height="240"/>
@@ -26,10 +26,7 @@
   <image source="props/bench_simple_small_shadow2.png" width="120" height="180"/>
  </tile>
  <tile id="8">
-  <image source="props/table_shadow1.png" width="360" height="180"/>
- </tile>
- <tile id="9">
-  <image source="props/table_shadow2.png" width="240" height="300"/>
+  <image source="props/table_shadow1.png" width="240" height="300"/>
  </tile>
  <tile id="10">
   <image source="props/table_tablecloth_shadow1.png" width="360" height="180"/>
@@ -53,10 +50,10 @@
   <image source="props/wall_fence2.png" width="120" height="360"/>
  </tile>
  <tile id="17">
-  <image source="props/flower_pot_dirt.png" width="120" height="120"/>
+  <image source="props/flower_pot_dirt.png" width="75" height="86"/>
  </tile>
  <tile id="18">
-  <image source="props/flower_pot_empty.png" width="120" height="120"/>
+  <image source="props/flower_pot_empty.png" width="75" height="86"/>
  </tile>
  <tile id="19">
   <image source="props/flower_pot_empty_shadow.png" width="120" height="120"/>

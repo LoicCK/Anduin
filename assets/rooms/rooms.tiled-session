@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "plants.tsx",
+    "activeFile": "bigHouse.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -66,7 +66,7 @@
         },
         "TX Village Building_7680.tsx": {
             "dynamicWrapping": false,
-            "scaleInDock": 0.33,
+            "scaleInDock": 0.75,
             "scaleInEditor": 0.33
         },
         "TX Village Plant Shadow_3840.tsx": {
@@ -89,22 +89,22 @@
         },
         "bigHouse.tmx": {
             "expandedObjectLayers": [
-                36,
-                30
+                30,
+                36
             ],
-            "scale": 0.33,
-            "selectedLayer": 4,
+            "scale": 0.5,
+            "selectedLayer": 5,
             "viewCenter": {
-                "x": 915.1515151515152,
-                "y": 1056.060606060606
+                "x": 1110,
+                "y": 782
             }
         },
         "bigHousePath.tmx": {
-            "scale": 0.125,
+            "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 960,
-                "y": 540
+                "x": 1110,
+                "y": -298
             }
         },
         "buildings.tsx": {
@@ -137,8 +137,9 @@
         }
     },
     "last.imagePath": "C:/Users/loicc/Documents/code/jeu vidéo/Anduin/assets/rooms/buildings",
+    "last.worldFilePath": "C:/Users/loicc/Documents/Jeu vidéo/java/Anduin/assets/rooms",
     "loadedWorlds": [
-        "C:/Users/loicc/Documents/code/jeu vidéo/Anduin/assets/rooms/city.world"
+        "C:/Users/loicc/Documents/Jeu vidéo/java/Anduin/assets/rooms/city.world"
     ],
     "map.height": 8,
     "map.lastUsedFormat": "tmx",
@@ -171,10 +172,10 @@
         "TX Village Props Shadow_7680.tsx",
         "TX Village Props_7680.tsx",
         "TX Village Plant_3840.tsx",
-        "bigHouse.tmx",
-        "bigHousePath.tmx",
         "buildings.tsx",
-        "props.tsx"
+        "props.tsx",
+        "plants.tsx",
+        "bigHousePath.tmx"
     ],
     "stampsFolder": "C:/Users/loicc/Documents/code/jeu vidéo/Anduin/assets/rooms",
     "tileset.lastUsedFormat": "tsx",

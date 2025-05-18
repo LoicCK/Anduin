@@ -2,6 +2,7 @@ package io.github.algorythmTTV.TGAA.engine;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.TextureMapObject;
@@ -28,12 +29,13 @@ public class SortableMapObject implements Renderable {
 
     private final float ySortValue;
 
-    public SortableMapObject(MapObject mapObject) {
+    public SortableMapObject(MapObject mapObject, TextureAtlas atlas) {
         boolean objectProcessed = false;
 
         if (mapObject instanceof TextureMapObject) {
             TextureMapObject textureObject = (TextureMapObject) mapObject;
-            this.textureRegion = textureObject.getTextureRegion();
+            this.textureRegion = atlas.findRegion(textureObject.getName());
+            Gdx.app.log("SortableMapObject", textureObject.getName());
 
             if (this.textureRegion != null) {
                 this.x = textureObject.getX()*SCALE;
@@ -67,7 +69,6 @@ public class SortableMapObject implements Renderable {
             this.originY = this.height / 2f;
         }
 
-        Gdx.app.log("SortableMapObject", "x: " + this.x + ", y: " + this.y);
         this.ySortValue = this.y;
     }
 

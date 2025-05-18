@@ -75,7 +75,7 @@ public class Room {
         MapLayer objectLayer = map.getLayers().get(SORTABLE_OBJECT_LAYER_NAME);
         if (objectLayer != null) {
             for (MapObject mapObj : objectLayer.getObjects()) {
-                SortableMapObject sortableObj = new SortableMapObject(mapObj);
+                SortableMapObject sortableObj = new SortableMapObject(mapObj, manager.get("rooms/props/atlas/props.atlas"));
                 sortableMapObjects.add(sortableObj);
             }
         } else {

@@ -2,13 +2,16 @@ package io.github.algorythmTTV.TGAA.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import io.github.algorythmTTV.TGAA.TGAA;
 import io.github.algorythmTTV.TGAA.engine.Item;
 import io.github.algorythmTTV.TGAA.engine.ItemList;
 import io.github.algorythmTTV.TGAA.engine.Renderable;
+import org.w3c.dom.Text;
 
 public class Player extends IntelligentCharacter implements Renderable {
     private int money;
@@ -17,16 +20,20 @@ public class Player extends IntelligentCharacter implements Renderable {
     private int health;
     private int maxHealth;
     public Animation<TextureRegion> runningAnimation;
+    public Animation<TextureRegion> idleAnimation;
     private float stateTime = 0f;
     private boolean isMoving = false;
     public boolean facingRight = true;
 
     public Player(AssetManager manager) {
-        super("player", "The player", manager, 50f, 50f, 400, 50, manager.get("characters/animations/player/run/player_run.atlas"));
+        super("player", "The player", manager, 50f, 50f, 400, 50);
         money = 0;
         weight = 0;
         maxWeight = 300;
-        runningAnimation = new Animation<TextureRegion>(0.05f, atlas.findRegions("frame"), Animation.PlayMode.LOOP);
+        TextureAtlas runningAtlas = manager.get("characters/animations/player/run/player_run.atlas");
+        runningAnimation = new Animation<TextureRegion>(0.05f, runningAtlas.findRegions("frame"), Animation.PlayMode.LOOP);
+        TextureAtlas idleAtlas = manager.get("characters/animations/player/idle/player_idle.atlas");
+        idleAnimation = new Animation<TextureRegion>(0.1f, idleAtlas.findRegions("idle"), Animation.PlayMode.LOOP);
     }
 
     public void setMoving(boolean moving) {
@@ -46,14 +53,7 @@ public class Player extends IntelligentCharacter implements Renderable {
         if (isMoving && runningAnimation != null) {
             currentFrame = runningAnimation.getKeyFrame(stateTime, true);
         } else {
-            if (atlas != null && atlas.findRegion("frame", 1) != null) {
-                currentFrame = atlas.findRegion("frame", 1);
-            } else if (texture != null) {
-                batch.draw(texture, sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
-                return;
-            } else {
-                return;
-            }
+            currentFrame = idleAnimation.getKeyFrame(stateTime, true);
         }
 
         if (currentFrame == null) return;

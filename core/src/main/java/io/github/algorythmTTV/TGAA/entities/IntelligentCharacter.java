@@ -16,15 +16,14 @@ public class IntelligentCharacter {
     protected Sprite sprite;
     TextureAtlas atlas;
 
-    public IntelligentCharacter(String name, String description, AssetManager manager, float width, float height, float x, float y, TextureAtlas atlas) {
+    public IntelligentCharacter(String name, String description, AssetManager manager, float width, float height, float x, float y) {
         this.name = name;
         this.description = description;
         inventory = new ItemList();
-        texture = manager.get("characters/" + name + ".png", Texture.class);
+        texture = manager.get("characters/" + name + ".png");
         sprite = new Sprite(texture);
         sprite.setSize(width, height);
         sprite.setPosition(x, y);
-        this.atlas = atlas;
     }
 
     public Sprite getSprite() {

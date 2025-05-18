@@ -31,7 +31,7 @@ public class GameScreen implements Screen {
     final TGAA game;
     private AssetManager manager;
     private Room currentRoom;
-    private final Player player;
+    private Player player;
     HashMap<String, Room> rooms;
     ArrayList<Room> loadedRooms;
     private MusicPlayer musicPlayer;
@@ -39,38 +39,17 @@ public class GameScreen implements Screen {
     private Texture lastFrameTexture;
     private KeyManager keyManager = new KeyManager();
     private com.badlogic.gdx.utils.Array<Renderable> dynamicObjects;
+    private boolean needSorting = true;
 
-    public GameScreen(TGAA game) {
+    public GameScreen(TGAA game, AssetManager assetManager) {
         this.game = game;
-        manager = new AssetManager();
-        manager.load("characters/player.png", Texture.class);
-        manager.load("items/HealthPotion.png", Texture.class);
-        manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
+        manager = assetManager;
 
         rooms = new HashMap<>();
         loadedRooms = new ArrayList<>();
 
-        String[] mapFiles = {
-            "rooms/bigHouse.tmx"
-        };
-
-        for (String mapFile : mapFiles) {
-            manager.load(mapFile, TiledMap.class);
-        }
-
-        manager.setLoader(TextureAtlas.class,
-            new TextureAtlasLoader(new InternalFileHandleResolver())
-        );
-
-        manager.load("ui/ui.atlas", TextureAtlas.class);
-        manager.load("characters/animations/player/run/player_run.atlas", TextureAtlas.class);
-        manager.finishLoading();
-
-        currentRoom = new Room("bigHouse", manager, IntStream.range(0,4).toArray(), new int[] {5});
-        currentRoom.prepRoom();
+        currentRoom = new Room("bigHouse", manager, new int[] {0,1,2}, new int[] {4});
         rooms.put("bigHouse", currentRoom);
-
-        player = new Player(manager);
 
         musicPlayer = new MusicPlayer();
 
@@ -78,11 +57,30 @@ public class GameScreen implements Screen {
 
         pauseFbo = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 
+        dynamicObjects = new com.badlogic.gdx.utils.Array<Renderable>();
+    }
 
+    public void prepare() {
+        currentRoom.prepRoom();
+
+        player = new Player(manager);
+
+        loadDynamicObjects();
+
+        dynamicObjects.sort(Comparator.comparingDouble(Renderable::getYSortValue));
+        dynamicObjects.reverse();
     }
 
     public KeyManager getKeyManager() {
         return keyManager;
+    }
+
+    public void loadDynamicObjects() {
+        dynamicObjects.clear();
+        dynamicObjects.add(player);
+        if (currentRoom.getSortableMapObjects() != null) {
+            dynamicObjects.addAll(currentRoom.getSortableMapObjects());
+        }
     }
 
     public void changeRoom(String roomName) {
@@ -102,11 +100,12 @@ public class GameScreen implements Screen {
                 loadedRooms.add(room);
             }
         }
+
+        loadDynamicObjects();
     }
 
     @Override
     public void show() {
-
     }
 
     @Override
@@ -126,14 +125,11 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
         currentRoom.renderBackground(game);
 
-        dynamicObjects = new com.badlogic.gdx.utils.Array<Renderable>();;
-        dynamicObjects.add(player);
-        if (currentRoom.getSortableMapObjects() != null) {
-            dynamicObjects.addAll(currentRoom.getSortableMapObjects());
+        if (needSorting) {
+            dynamicObjects.sort(Comparator.comparingDouble(Renderable::getYSortValue));
+            dynamicObjects.reverse();
+            needSorting = false;
         }
-
-        dynamicObjects.sort(Comparator.comparingDouble(Renderable::getYSortValue));
-        dynamicObjects.reverse();
 
         game.batch.begin();
 
@@ -144,6 +140,8 @@ public class GameScreen implements Screen {
         game.batch.end();
 
         currentRoom.renderForegroundLayers(game);
+
+        //System.out.println(Gdx.graphics.getFramesPerSecond());
 //        currentRoom.renderItems(player.getSprite().getX(), player.getSprite().getY(), game);
 //        renderInv();
     }
@@ -165,6 +163,7 @@ public class GameScreen implements Screen {
         float newX, newY;
         Sprite playerSprite = player.getSprite();
         boolean isNowMoving = false;
+        needSorting = false;
 
         if (Gdx.input.isKeyPressed(keyManager.getKey(Keys.GORIGHT))) {
             newX = playerSprite.getX() + moveSpeed;
@@ -172,6 +171,7 @@ public class GameScreen implements Screen {
                 playerSprite.translateX(moveSpeed);
                 player.facingRight = true;
                 isNowMoving = true;
+                needSorting = true;
             }
         } else if (Gdx.input.isKeyPressed(keyManager.getKey(Keys.GOLEFT))) {
             newX = playerSprite.getX() - moveSpeed;
@@ -179,6 +179,7 @@ public class GameScreen implements Screen {
                 playerSprite.translateX(-moveSpeed);
                 player.facingRight = false;
                 isNowMoving = true;
+                needSorting = true;
             }
         }
 
@@ -187,12 +188,14 @@ public class GameScreen implements Screen {
             if (!currentRoom.collidesWith(playerSprite.getX()+5, newY-10, playerSprite.getWidth()-5, 15)) {
                 playerSprite.translateY(-moveSpeed);
                 isNowMoving = true;
+                needSorting = true;
             }
         } else if (Gdx.input.isKeyPressed(keyManager.getKey(Keys.GOUP))) {
             newY = playerSprite.getY() + moveSpeed;
             if (!currentRoom.collidesWith(playerSprite.getX()+5, newY-10, playerSprite.getWidth()-5, 15)) {
                 playerSprite.translateY(moveSpeed);
                 isNowMoving = true;
+                needSorting = true;
             }
         }
 
@@ -205,6 +208,7 @@ public class GameScreen implements Screen {
             int y = (int) tp[2];
             changeRoom(destination);
             playerSprite.setPosition(x, y);
+            needSorting = true;
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
