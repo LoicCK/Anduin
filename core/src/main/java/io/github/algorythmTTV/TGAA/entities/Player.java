@@ -47,7 +47,7 @@ public class Player extends IntelligentCharacter implements Renderable {
 
 
     @Override
-    public void render(Batch batch) { // Notez le paramètre Batch
+    public void render(Batch batch) {
         stateTime += Gdx.graphics.getDeltaTime();
         TextureRegion currentFrame;
         if (isMoving && runningAnimation != null) {
